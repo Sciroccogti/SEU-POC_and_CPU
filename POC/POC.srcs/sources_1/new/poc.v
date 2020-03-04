@@ -27,7 +27,7 @@ module poc(
     input [7:0] Din,    // 
     input ADDR,         // address, SR: 0, BR: 0
     // input SR0,          // Interrupt bit, switch mode
-    output IRQ,         // interrupt request
+    output IRQ,         // interrupt request, request: 1
     output reg [7:0] Dout,
 
     // with Printer
@@ -39,7 +39,7 @@ module poc(
     reg [7:0] SR = 8'b00000000; // Status Register, SR7:Ready flag bit, SR0:Interrupt bit
     reg [7:0] BR = 8'b00000000; // Buffer Register
 
-    reg [7:0] SRbuf;
+    reg [7:0] SRbuf; // 异步？
     reg [7:0] BRbuf;
 
     reg [1:0] stat = 2'b00; // stat flag
@@ -47,6 +47,7 @@ module poc(
     // 01: contacting with printer
     // 10: printing
 
+    // with CPU
     always @(posedge CLK)
     begin
         if(RW == 0) // read
@@ -66,44 +67,51 @@ module poc(
         end
     end
 
+    // with Printer
     always @(posedge CLK)
     begin
-        if(SR[0] == 0) // 查询方式
+        case(stat)
+        2'b00: // waiting for cpu
         begin
-            case(stat)
-            2'b00: // waiting for cpu
-            begin
-                if(SR[7] == 0) // CPU已经写入新数据但尚未被处理
-                begin // start to fetch data
-                    stat = 2'b01;
-                    BR[7:0] = BRbuf[7:0];
-                    SR[7:0] = SRbuf[7:0];
-                    SR[7] = 1;
-                end
+            if(SR[7] == 0) // CPU已经写入新数据但尚未被处理
+            begin // start to fetch data
+                stat = 2'b01;
+                BR[7:0] = BRbuf[7:0];
+                SR[7:0] = SRbuf[7:0];
+                SR[7] = 1;
             end
+        end
 
-            2'b01: // contacting with printer
-            begin
-                if(RDY == 1) // printer is ready
-                begin // start to contact
-                    stat = 2'b10;
-                    TR = 1;
-                    PD[7:0] = BR[7:0];
-                end
+        2'b01: // contacting with printer
+        begin
+            if(RDY == 1) // printer is ready
+            begin // start to contact
+                stat = 2'b10;
+                TR = 1;
+                PD[7:0] = BR[7:0];
             end
+        end
 
-            2'b10: // printing 
+        2'b10: // printing 
+        begin
+            if(RDY == 0) // printed
             begin
-                if(RDY == 0) // printed
-                begin
-                    stat = 2'b00;
-                    TR = 0;
-                end
+                stat = 2'b00;
+                TR = 0;
             end
+        end
 
-            default:;
-            endcase
-        end        
+        default:;
+        endcase   
+    end
+
+    // IRQ
+    always @(posedge CLK)
+    begin
+        if (SR[7] == 1 && SR[0] == 1)
+            IRQ = 1;
+        else
+            IRQ = 0;
     end
 
 endmodule
