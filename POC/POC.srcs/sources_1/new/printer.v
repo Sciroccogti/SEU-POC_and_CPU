@@ -21,6 +21,24 @@
 
 
 module printer(
-
+    input CLK,
+    input TR,       // Transport Request
+    input [7:0] PD, // Parallel Data
+    output RDY,     // Ready
     );
+
+    // reg stat = 1'b0; // stat flag
+    reg [7:0] data; 
+
+    always @(posedge CLK)
+    begin
+        if (TR == 1)
+        begin
+            RDY = 0;
+            data[7:0] = PD[7:0];
+            RDY = #20 (1);
+            data[7:0] = 8'b00000000;
+        end
+    end
+
 endmodule

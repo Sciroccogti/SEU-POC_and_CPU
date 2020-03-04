@@ -28,12 +28,12 @@ module poc(
     input ADDR,         // address, SR: 0, BR: 0
     // input SR0,          // Interrupt bit, switch mode
     output IRQ,         // interrupt request, request: 1
-    output reg [7:0] Dout,
+    output [7:0] Dout,
 
     // with Printer
     input RDY,          // Ready
-    output reg TR,      // Transport Request
-    output reg [7:0] PD     // Parallel Data
+    output TR,      // Transport Request
+    output [7:0] PD     // Parallel Data
     );
 
     reg [7:0] SR = 8'b00000000; // Status Register, SR7:Ready flag bit, SR0:Interrupt bit
