@@ -4,7 +4,7 @@ parallel output controller 并行输出控制器
 
 ## 结构介绍
 
-![](./assets/poc-1.png)
+![](../assets/poc-1.png)
 
 ### POC 寄存器
 
