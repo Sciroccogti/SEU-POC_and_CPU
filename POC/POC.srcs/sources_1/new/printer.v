@@ -24,7 +24,7 @@ module printer(
     input CLK,
     input TR,       // Transport Request
     input [7:0] PD, // Parallel Data
-    output RDY,     // Ready
+    output RDY      // Ready
     );
 
     // reg stat = 1'b0; // stat flag
