@@ -21,13 +21,14 @@
 
 
 module poc(
+    input switch,       // choose mode, 查询: 0, 中断: 1
     // with Processor
     input CLK,
     input RW,           // Read: 0, Write: 1
     input [7:0] Din,    // 
-    input ADDR,         // address, SR: 0, BR: 0
+    input ADDR,         // address, SR: 0, BR: 1
     // input SR0,          // Interrupt bit, switch mode
-    output IRQ,         // interrupt request, request: 1
+    output IRQ,         // interrupt request, request: 0
     output [7:0] Dout,
 
     // with Printer
@@ -70,6 +71,7 @@ module poc(
     // with Printer
     always @(posedge CLK)
     begin
+        SR[0] = switch;
         case(stat)
         2'b00: // waiting for cpu
         begin
@@ -87,8 +89,8 @@ module poc(
             if(RDY == 1) // printer is ready
             begin // start to contact
                 stat = 2'b10;
-                TR = 1;
                 PD[7:0] = BR[7:0];
+                TR = 1;
             end
         end
 
@@ -109,9 +111,9 @@ module poc(
     always @(posedge CLK)
     begin
         if (SR[7] == 1 && SR[0] == 1)
-            IRQ = 1;
-        else
             IRQ = 0;
+        else
+            IRQ = 1;
     end
 
 endmodule

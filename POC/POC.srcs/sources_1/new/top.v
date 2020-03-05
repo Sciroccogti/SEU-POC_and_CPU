@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 2020/03/04 22:31:45
+// Create Date: 2020/03/05 22:25:20
 // Design Name: 
-// Module Name: cpu
+// Module Name: top
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module cpu(
+module top(
 
     );
 endmodule
