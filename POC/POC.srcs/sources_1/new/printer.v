@@ -5,7 +5,7 @@
 // 
 // Create Date: 2020/03/04 22:31:45
 // Design Name: 
-// Module Name: printer
+// Module Name: Printer
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module printer(
+module Printer(
     input CLK,
     input TR,       // Transport Request
     input [7:0] PD, // Parallel Data

@@ -5,7 +5,7 @@
 // 
 // Create Date: 2020/03/04 22:31:45
 // Design Name: 
-// Module Name: processor
+// Module Name: Processor
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module processor(
+module Processor(
     input CLK,
     input print,        // print signal
     input [7:0] data,   //

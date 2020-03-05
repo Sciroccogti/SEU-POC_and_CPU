@@ -5,14 +5,14 @@
 // 
 // Create Date: 2020/03/04 18:59:34
 // Design Name: 
-// Module Name: poc
+// Module Name: Poc
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
 // Description: 
 // 
 // Dependencies: 
-// 
+// A
 // Revision:
 // Revision 0.01 - File Created
 // Additional Comments:
@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module poc(
+module Poc(
     input switch,       // choose mode, 查询: 0, 中断: 1
     // with Processor
     input CLK,

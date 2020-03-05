@@ -5,7 +5,7 @@
 // 
 // Create Date: 2020/03/05 22:25:20
 // Design Name: 
-// Module Name: top
+// Module Name: Top
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,7 +20,27 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module top(
-
+module Top(
+    input CLK,
+    input switch,
+    input print,
+    input [7:0] data
     );
+    
+    wire RW;
+    wire [7:0] Din;
+    wire ADDR;
+    wire IRQ;
+    wire [7:0] Dout;
+
+    wire RDY;
+    wire TR;
+    wire [7:0] PD;
+    
+    Processor processor(CLK, print, data[7:0], RW, Din[7:0], ADDR, IRQ, Dout[7:0]);
+    
+    Poc poc(switch, CLK, RW, Din[7:0], ADDR, IRQ, Dout[7:0], RDY, TR, PD[7:0]);
+
+    Printer printer(CLK, TR, PD[7:0]);
+
 endmodule
