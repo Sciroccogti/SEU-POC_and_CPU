@@ -24,7 +24,8 @@ module Top(
     input CLK,
     input switch,
     input print,
-    input [7:0] data
+    input [7:0] data,
+    output [7:0] data_out
     );
     
     wire RW;
@@ -41,6 +42,6 @@ module Top(
     
     Poc poc(switch, CLK, RW, Din[7:0], ADDR, IRQ, Dout[7:0], RDY, TR, PD[7:0]);
 
-    Printer printer(CLK, TR, PD[7:0]);
+    Printer printer(CLK, TR, PD[7:0], RDY, data_out[7:0]);
 
 endmodule

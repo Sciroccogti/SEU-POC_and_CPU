@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 2020/03/04 22:31:45
+// Create Date: 2020/03/16 11:48:19
 // Design Name: 
-// Module Name: Processor
+// Module Name: testpoc
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,17 +20,81 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module Processor(
-    input CLK,
-    input print,        // print signal, print: 1
-    input [7:0] data,   //
-    // with POC
-    output reg RW = 0,      // Read: 0, Write: 1
-    output reg [7:0] Din,   // 
-    output reg ADDR,        // address, SR: 0, BR: 1
-    input IRQ,          // interrupt request, request: 0
-    input [7:0] Dout
+module testpoc(
+
     );
+    reg CLK;
+    reg switch; // 查询: 0, 中断: 1
+    reg print = 0; // print signal, print: 1
+    reg RW = 0;
+    reg [7:0] Din;
+    reg ADDR = 0;
+    wire IRQ;
+    wire [7:0] Dout;
+    wire RDY;
+    wire TR;
+    wire [7:0] PD;
+    
+    reg [7:0] data;
+    wire [7:0] data_out;
+
+    Poc poc2(switch, CLK, RW, Din[7:0], ADDR, IRQ, Dout[7:0], RDY, TR, PD[7:0]);
+    Printer printer2(CLK, TR, PD[7:0], RDY, data_out[7:0]);
+
+    initial // set the clock
+    begin
+        CLK = 0;
+        forever #1 CLK = ~CLK;
+    end
+
+    initial // set the excitation
+    begin
+        // 1: 查询方式
+        switch = 0;
+        #100
+        data[7:0] = 8'b00010001;
+        print = 1;
+        #100
+        print = 0;
+        #100
+
+        // 2: 查询方式
+        switch = 0;
+        #100
+        data[7:0] = 8'b00100010;
+        print = 1;
+        #100
+        print = 0;
+        #100
+
+        // 3: 中断方式
+        switch = 1;
+        #100
+        data[7:0] = 8'b00110011;
+        print = 1;
+        #100
+        print = 0;
+        #100
+
+        // 4: 中断方式
+        switch = 1;
+        #100
+        data[7:0] = 8'b01000100;
+        print = 1;
+        #100
+        print = 0;
+        #100
+
+        // 5: 查询方式
+        switch = 0;
+        #100
+        data[7:0] = 8'b01010101;
+        print = 1;
+        #100
+        print = 0;
+        #100
+        $finish;
+    end
 
     always @(posedge CLK)
     begin
@@ -74,5 +138,4 @@ module Processor(
                 RW = 0;
         end
     end
-
 endmodule
