@@ -41,10 +41,10 @@ module Processor(
                 Din[7:0] = data[7:0];
                 ADDR = 1; // write BR
                 RW = 1;
-                #1
+                #4
                 Din[7:0] = 8'b00000001; // set SR7 = 0
                 ADDR = 0; // write SR
-                #1
+                #4
                 RW = 0;
             end
             else 
@@ -57,16 +57,16 @@ module Processor(
             begin
                 ADDR = 0; // read SR
                 RW = 0;
-                #1
+                #4
                 if (Dout[7] == 1) // SR7 == 1, poc is ready
                 begin
                     Din[7:0] = data[7:0];
                     ADDR = 1;
                     RW = 1; // write BR
-                    #1
+                    #4
                     Din[7:0] = 8'b00000000; // set SR7 = 0
                     ADDR = 0; // write SR
-                    #1
+                    #4
                     RW = 0;
                 end
             end

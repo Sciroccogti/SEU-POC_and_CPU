@@ -24,7 +24,7 @@ module Printer(
     input CLK,
     input TR,                   // Transport Request
     input [7:0] PD,             // Parallel Data
-    output reg RDY,             // Ready
+    output reg RDY = 1,             // Ready
     output reg [7:0] data_out
     );
 
