@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="test_ALU_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="test_ALU" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="16001fs"></ZoomEndTime>
+      <Cursor1Time time="20000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="138"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="23" />
+   <wvobject fp_name="/test_ALU/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/C" type="array">
+      <obj_property name="ElementShortName">C[15:0]</obj_property>
+      <obj_property name="ObjectShortName">C[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/CU" type="array">
+      <obj_property name="ElementShortName">CU[2:0]</obj_property>
+      <obj_property name="ObjectShortName">CU[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/mbr2acc" type="array">
+      <obj_property name="ElementShortName">mbr2acc[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mbr2acc[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/mbr2br" type="array">
+      <obj_property name="ElementShortName">mbr2br[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mbr2br[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/C7" type="logic">
+      <obj_property name="ElementShortName">C7</obj_property>
+      <obj_property name="ObjectShortName">C7</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/C14" type="logic">
+      <obj_property name="ElementShortName">C14</obj_property>
+      <obj_property name="ObjectShortName">C14</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/cu2alu" type="array">
+      <obj_property name="ElementShortName">cu2alu[2:0]</obj_property>
+      <obj_property name="ObjectShortName">cu2alu[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/acc2alu" type="array">
+      <obj_property name="ElementShortName">acc2alu[15:0]</obj_property>
+      <obj_property name="ObjectShortName">acc2alu[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/br2alu" type="array">
+      <obj_property name="ElementShortName">br2alu[15:0]</obj_property>
+      <obj_property name="ObjectShortName">br2alu[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/alu2mr" type="array">
+      <obj_property name="ElementShortName">alu2mr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alu2mr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/alu2acc" type="array">
+      <obj_property name="ElementShortName">alu2acc[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alu2acc[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/acc_in" type="array">
+      <obj_property name="ElementShortName">acc_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/br_in" type="array">
+      <obj_property name="ElementShortName">br_in[15:0]</obj_property>
+      <obj_property name="ObjectShortName">br_in[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/temp" type="array">
+      <obj_property name="ElementShortName">temp[31:0]</obj_property>
+      <obj_property name="ObjectShortName">temp[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/i" type="array">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/acc/C9" type="logic">
+      <obj_property name="ElementShortName">C9</obj_property>
+      <obj_property name="ObjectShortName">C9</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/acc/C10" type="logic">
+      <obj_property name="ElementShortName">C10</obj_property>
+      <obj_property name="ObjectShortName">C10</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/acc/acc_out" type="array">
+      <obj_property name="ElementShortName">acc_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/br/C6" type="logic">
+      <obj_property name="ElementShortName">C6</obj_property>
+      <obj_property name="ObjectShortName">C6</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/br/br_out" type="array">
+      <obj_property name="ElementShortName">br_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">br_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/mr/mr_out" type="array">
+      <obj_property name="ElementShortName">mr_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mr_out[15:0]</obj_property>
+   </wvobject>
+</wave_config>
