@@ -5,8 +5,8 @@ module ACC(
     input rst,
     input C9,               // ALU to ACC
     input C10,              // MBR to ACC
-    input [15:0] mbr2acc,    // data from MBR
     input [15:0] alu2acc,    // data from ALU
+    input [15:0] mbr2acc,    // data from MBR
     output reg [15:0] acc_out
     );
 
