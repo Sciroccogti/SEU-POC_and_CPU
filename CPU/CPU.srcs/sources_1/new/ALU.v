@@ -1,5 +1,6 @@
 `timescale 1ns / 1ps
 // TODO: useless C7 and C14?
+// TODO: addition overflow
 module ALU(
     input clk,
     input C7,               // ACC to ALU
