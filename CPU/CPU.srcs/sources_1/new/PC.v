@@ -4,6 +4,7 @@ module PC(
     input clk,
     input rst,
     input C3,               // MBR to PC
+    input C15,              // PC ++
     input [7:0] mbr2pc,
     output reg [7:0] pc_out
 );
@@ -16,7 +17,7 @@ module PC(
         begin
             if(C3)
                 pc_out = mbr2pc;
-            else
+            else if(C15)
                 pc_out = pc_out + 1;
         end
     end

@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
-// TODO: useless C7 and C14?
+`include "params.v"
 // TODO: addition overflow
 module ALU(
     input clk,
     input C7,               // ACC to ALU
     input C14,              // BR to ALU
-    input [2:0] cu2alu,      // signal from CU
+    input [3:0] cu2alu,      // signal from CU
     input [15:0] acc2alu,    // data from ACC
     input [15:0] br2alu,     // data from BR
 
@@ -29,21 +29,21 @@ module ALU(
     always @(negedge clk)
     begin
         case (cu2alu)
-            3'd0: // ADD
+            ADD: // ADD
                 alu2acc = acc_in + br_in;
-            3'd1: // SUB
+            SUB: // SUB
                 alu2acc = acc_in - br_in;
-            3'd2: // AND
+            AND: // AND
                 alu2acc = acc_in & br_in;
-            3'd3: // OR
+            OR: // OR
                 alu2acc = acc_in | br_in;
-            3'd4: // NOT
+            NOT: // NOT
                 alu2acc = ~acc_in;
-            3'd5: // SRL
+            SRL: // SRL
                 alu2acc = acc_in << 1;
-            3'd6: // SRR
+            SRR6: // SRR
                 alu2acc = acc_in >> 1;
-            3'd7: // MPY
+            MPY: // MPY
             begin
                 for (i = 0; i < 16; i = i + 1)
                 begin
