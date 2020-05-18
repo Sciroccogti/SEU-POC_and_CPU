@@ -6,7 +6,7 @@ CU必须用微程序设计方式
 
 ## 结构介绍
 
-![](../assets/cpu1.png)
+![](../assets/CPU.png)
 
 包含RAM
 
