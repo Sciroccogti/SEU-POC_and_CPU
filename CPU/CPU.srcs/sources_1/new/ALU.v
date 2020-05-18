@@ -15,22 +15,6 @@ module ALU(
     output reg [5:0] flags      // 5CF,4PF,3AF,2ZF,1SF,0OF
     );
 
-    parameter STOREX    = 8'b00000001;
-    parameter LOADX     = 8'b00000010;
-    parameter ADDX      = 8'b00000011;
-    parameter SUBX      = 8'b00000100;
-    parameter JMPGEZX   = 8'b00000101;
-    parameter JMPX      = 8'b00000110;
-    parameter HALT      = 8'b00000111;
-
-    parameter MPYX      = 8'b00001000;
-
-    parameter ANDX      = 8'b00001010;
-    parameter ORX       = 8'b00001011;
-    parameter NOTX      = 8'b00001100;
-    parameter SHIFTR    = 8'b00001101;
-    parameter SHIFTL    = 8'b00001110;
-
     // para for operation(cu2alu)
     parameter ADD = 4'd1;
     parameter SUB = 4'd2;
@@ -43,7 +27,7 @@ module ALU(
     
     reg [15:0] acc_in;
     reg [15:0] br_in;
-    reg [31:0] temp = 0;
+    reg [31:0] exbr = 0, exacc = 0, temp = 0;
     integer i;
 
     always @(negedge clk)
@@ -56,6 +40,9 @@ module ALU(
 
     always @(negedge clk)
     begin
+        temp = 0;
+        exbr = 0;
+        exacc = 0;
         case (cu2alu)
             ADD: begin// ADD
                 flags = 0;
@@ -120,14 +107,24 @@ module ALU(
             MPY: // MPY
             begin
                 flags = 0;
-                for (i = 0; i < 16; i = i + 1)
-                begin
-                    if (br_in[i])
-                        temp = temp + (acc_in << i);
+
+                // sign extend
+                exbr[15:0] = br_in;
+                exacc[15:0] = acc_in;
+                for (i = 16; i < 32; i = i + 1) begin
+                    exbr[i] = br_in[15];
+                    exacc[i] = acc_in[15];
                 end
+                for (i = 0; i < 31; i = i + 1)
+                begin
+                    if (exbr[i])
+                        temp = temp + (exacc << i);
+                end
+                // if (br_in[15] != acc_in[15]) begin // 异号则结果为�?
+                    
+                // end
                 alu2acc = temp[15:0];
                 alu2mr = temp[31:16];
-                temp = 0;
                 flags[2] = !alu2acc; // ZF
                 flags[1] = alu2acc[15]; // SF
             end

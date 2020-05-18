@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="2812fs"></ZoomStartTime>
-      <ZoomEndTime time="28238fs"></ZoomEndTime>
+      <ZoomStartTime time="1438fs"></ZoomStartTime>
+      <ZoomEndTime time="28513fs"></ZoomEndTime>
       <Cursor1Time time="24000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="175"></NameColumnWidth>
-      <ValueColumnWidth column_width="126"></ValueColumnWidth>
+      <ValueColumnWidth column_width="120"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="12" />
+   <WVObjectSize size="14" />
    <wvobject fp_name="/test_ALU/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -68,5 +68,13 @@
    <wvobject fp_name="/test_ALU/top_alu/alu/br2alu" type="array">
       <obj_property name="ElementShortName">br2alu[15:0]</obj_property>
       <obj_property name="ObjectShortName">br2alu[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/exacc" type="array">
+      <obj_property name="ElementShortName">exacc[31:0]</obj_property>
+      <obj_property name="ObjectShortName">exacc[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_ALU/top_alu/alu/exbr" type="array">
+      <obj_property name="ElementShortName">exbr[31:0]</obj_property>
+      <obj_property name="ObjectShortName">exbr[31:0]</obj_property>
    </wvobject>
 </wave_config>

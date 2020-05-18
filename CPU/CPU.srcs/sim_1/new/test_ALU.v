@@ -35,8 +35,8 @@ module test_ALU(
         rst = 1;
 
         #4 // 准备数据
-        mbr2acc = 16'hfffe;
-        mbr2br = 16'h0008;
+        mbr2acc = 16'hfffa;
+        mbr2br = 16'hfffb;
         C[6] = 1;
         C[10] = 1;
 

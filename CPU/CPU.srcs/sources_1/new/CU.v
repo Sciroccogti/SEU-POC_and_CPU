@@ -24,7 +24,7 @@ parameter JMPX      = 8'b00000110;
 parameter HALT      = 8'b00000111;
 
 parameter MPYX      = 8'b00001000;
-
+parameter STOREMR   = 8'b00001001;
 parameter ANDX      = 8'b00001010;
 parameter ORX       = 8'b00001011;
 parameter NOTX      = 8'b00001100;
@@ -182,23 +182,15 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
                         endcase
                     end
                     JMPGEZX: begin
-                        // case (cycle)
-                        //     3'd0: begin
-                                if (!flags[1]) begin// ACC>=0
-                                    c[3] <= 1; // get addr from MBR to PC
-                                    // cycle <= cycle + 1;
-                                    stat <= stat + 1;
-                                end
-                                else begin
-                                    c[15] <= 1; // PC++
-                                    stat <= stat + 1;
-                                end
-                        //     end
-                        //     3'd1: begin
-                        //         c[0] <= 1; // notify RAM
-                        //         cycle <= cycle + 1;
-                        //     end
-                        // endcase
+                        if (!flags[1]) begin// ACC>=0
+                            c[3] <= 1; // get addr from MBR to PC
+                            // cycle <= cycle + 1;
+                            stat <= stat + 1;
+                        end
+                        else begin
+                            c[15] <= 1; // PC++
+                            stat <= stat + 1;
+                        end
                     end
                     JMPX: begin
                         c[3] <= 1; // get addr from MBR to PC
@@ -237,6 +229,23 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
                             end
                             3'd6: begin
                                 c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
+                            end
+                        endcase
+                    end
+                    STOREMR: begin
+                        case (cycle)
+                            3'd0: begin
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
+                            end
+                            3'd1: begin
+                                c[13] <= 1; // get data from MR to MBR
+                                cycle <= cycle + 1;
+                            end
+                            3'd2: begin
+                                c[0] <= 1; // notify RAM
+                                c[12] <= 1; // get data from MBR to RAM
                                 stat <= stat + 1;
                             end
                         endcase

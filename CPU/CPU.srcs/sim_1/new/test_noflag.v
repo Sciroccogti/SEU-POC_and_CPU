@@ -7,7 +7,7 @@ module test_nonflag(
     reg clk;
     reg rst = 0;
 
-    TOP_noflag top_noflag(clk, rst);
+    TOP_sim top_noflag(clk, rst);
 
     initial // set the clock
     begin
@@ -39,7 +39,11 @@ module test_nonflag(
         // #4
         // rst = 0;
 
-        #15000
+        // #15000 // sum 0 to 100
+        #5000 // MPYs
+        rst = 0;
+
+        #4
         $finish;
     end
 endmodule // test_nonflag
