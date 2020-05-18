@@ -1,6 +1,6 @@
 `ifndef _PARAMS_
 `define _PARAMS_
-
+// not support in simulation
 // para for instruction(ir2cu)
 parameter STOREX    = 8'b00000001;
 parameter LOADX     = 8'b00000010;
