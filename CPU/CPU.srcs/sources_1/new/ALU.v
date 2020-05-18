@@ -4,14 +4,15 @@
 
 module ALU(
     input clk,
-    input C7,               // ACC to ALU
-    input C14,              // BR to ALU
-    input [3:0] cu2alu,      // signal from CU
-    input [15:0] acc2alu,    // data from ACC
-    input [15:0] br2alu,     // data from BR
+    input C7,                   // ACC to ALU
+    input C14,                  // BR to ALU
+    input [3:0] cu2alu,         // signal from CU
+    input [15:0] acc2alu,       // data from ACC
+    input [15:0] br2alu,        // data from BR
 
     output reg [15:0] alu2mr,   // data to MR
-    output reg [15:0] alu2acc   // data to ACC
+    output reg [15:0] alu2acc,  // data to ACC
+    output reg [5:0] flags      // 5CF,4PF,3AF,2ZF,1SF,0OF
     );
 
     parameter STOREX    = 8'b00000001;
@@ -55,35 +56,60 @@ module ALU(
 
     always @(negedge clk)
     begin
+        flags = 0;
         case (cu2alu)
-            ADD: // ADD
-                alu2acc <= acc_in + br_in;
-            SUB: // SUB
-                alu2acc <= acc_in - br_in;
+            ADD: begin// ADD
+                temp = acc_in + br_in;
+                if (acc_in[15] == 0 && br_in[15] == 0 && temp[15] == 1) begin
+                    flags[5] <= 1; // CF
+                    temp[15] = 0;
+                end
+                alu2acc <= temp;
+            end
+            SUB: begin// SUB
+                temp = acc_in + (~br_in + 1);
+                if (acc_in[15] == 0 && br_in[15] == 0 && temp[15] == 1) begin
+                    flags[5] <= 1; // CF
+                    temp[15] = 0;
+                end
+                alu2acc <= temp;
+            end
             AND: // AND
                 alu2acc <= acc_in & br_in;
             OR: // OR
                 alu2acc <= acc_in | br_in;
             NOT: // NOT
                 alu2acc <= ~acc_in;
-            SRL: // SRL
-                alu2acc <= acc_in << 1;
-            SRR: // SRR
-                alu2acc <= acc_in >> 1;
+            SRL: begin// SRL
+                temp = acc_in << 1;
+                if (acc_in[15] == 0 && br_in[15] == 0 && temp[15] == 1)
+                    flags[5] <= 1; // CF
+                alu2acc[15] <= acc_in[15];
+                alu2acc[14:0] <= temp[14:0];
+            end
+            SRR: begin// SRR
+                temp = acc_in >> 1;
+                if (acc_in[15] == 0 && br_in[15] == 0 && temp[15] == 1)
+                    flags[5] <= 1; // CF
+                alu2acc[15] <= acc_in[15];
+                alu2acc[14:0] <= temp[14:0];
+            end
             MPY: // MPY
             begin
                 for (i = 0; i < 16; i = i + 1)
                 begin
                     if (br_in[i])
-                        temp <= temp + (acc_in << i);
+                        temp = temp + (acc_in << i);
                 end
-                alu2acc <= temp[15:0];
-                alu2mr <= temp[31:16];
-                temp <= 0;
+                alu2acc = temp[15:0];
+                alu2mr = temp[31:16];
+                temp = 0;
             end
             default:
                 alu2acc <= 0;
-        endcase 
+        endcase
+        flags[2] = !alu2acc; // ZF
+        flags[1] = alu2acc[15]; // SF
     end
 
 endmodule

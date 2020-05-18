@@ -5,6 +5,7 @@ module CU(
     input clk,
     input rst,
     input [7:0] ir2cu,
+    input [5:0] flags,      // CF,PF,AF,ZF,SF,OF
     output reg [15:0] c,
     output reg [3:0] cu2alu
 );
@@ -13,6 +14,7 @@ reg [2:0] stat;
 reg [7:0] opcode;
 reg [2:0] cycle;
 
+// para for opcode(ir2cu)
 parameter STOREX    = 8'b00000001;
 parameter LOADX     = 8'b00000010;
 parameter ADDX      = 8'b00000011;
@@ -38,13 +40,6 @@ parameter NOT = 4'd5;
 parameter SRL = 4'd6;
 parameter SRR = 4'd7;
 parameter MPY = 4'd8;
-
-// para for stat
-// parameter ADDR_FETCH = 3'd0;
-// parameter INSTR_PREFETCH = 3'd1;
-// parameter INSTR_FETCH = 3'd2;
-// parameter RUN = 3'd3;
-// parameter END = 3'd4;
 
 always @(negedge clk or negedge rst) begin // TODO: posedge clk?
     if (~rst) begin
@@ -94,8 +89,6 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
                             3'd2: begin
                                 c[0] <= 1; // notify RAM
                                 c[12] <= 1; // get data from MBR to RAM
-                                // cycle <= 0;
-                                // opcode <= 0;
                                 stat <= stat + 1;
                             end
                         endcase
@@ -187,6 +180,18 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
                             3'd6: begin
                                 c[9] <= 1; // get data from ALU to ACC
                                 stat <= stat + 1;
+                            end
+                        endcase
+                    end
+                    JMPGEZX: begin
+                        case (cycle)
+                            3'd0: begin
+                                if (zf)
+                                cycle <= cycle + 1;
+                            end
+                            3'd1: begin
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
                             end
                         endcase
                     end
