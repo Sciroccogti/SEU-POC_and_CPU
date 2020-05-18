@@ -35,13 +35,13 @@ module test_ALU(
         rst = 1;
 
         #4 // 准备数据
-        mbr2acc = 16'h0001;
-        mbr2br = 16'h0002;
+        mbr2acc = 16'hfffe;
+        mbr2br = 16'h0008;
         C[6] = 1;
         C[10] = 1;
 
         #4 // 调用ALU
-        CU[3:0] = SUB;
+        CU[3:0] = MPY;
         C = 16'h0;
         C[14] = 1;
         C[7] = 1;

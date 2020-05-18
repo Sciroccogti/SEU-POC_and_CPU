@@ -1,6 +1,6 @@
 `timescale 1ns / 1ps
 
-module TOP_noflag(
+module TOP_sim(
     input clk,
     input rst
 );
@@ -20,7 +20,7 @@ module TOP_noflag(
 
     IR ir(clk, rst, c[4], mbr_out[15:8], ir_out);
 
-    MAR mar(clk, rst, c[2], c[8], pc_out, mbr_out, mar_out);
+    MAR mar(clk, rst, c[2], c[8], pc_out, mbr_out[7:0], mar_out);
 
     MBR mbr(clk, rst, c[1], c[5], c[11], c[13], acc_out, ram_out, pc_out, mr_out, mbr_out);
 
@@ -30,7 +30,7 @@ module TOP_noflag(
 
     RAM_mod ram_mod(clk, rst, c[0], c[12], mar_out, mbr_out, ram_out);
 
-endmodule // TOP_noflag
+endmodule // TOP_sim
 
 module TOP_alu(
     input clk,

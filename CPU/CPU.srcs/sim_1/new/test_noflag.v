@@ -39,7 +39,7 @@ module test_nonflag(
         // #4
         // rst = 0;
 
-        #400
+        #15000
         $finish;
     end
 endmodule // test_nonflag

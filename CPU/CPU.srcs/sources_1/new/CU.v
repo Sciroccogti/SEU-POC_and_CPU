@@ -134,7 +134,6 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
                             3'd4: begin
                                 c[7] <= 1; // send ACC to ALU
                                 c[14] <= 1; // send BR to ALU
-                                // TODO: need another cycle between this?
                                 cu2alu <= ADD; // do calculation
                                 cycle <= cycle + 1;
                             end
@@ -169,7 +168,6 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
                             3'd4: begin
                                 c[7] <= 1; // send ACC to ALU
                                 c[14] <= 1; // send BR to ALU
-                                // TODO: need another cycle between this?
                                 cu2alu <= SUB; // do calculation
                                 cycle <= cycle + 1;
                             end
@@ -184,14 +182,229 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
                         endcase
                     end
                     JMPGEZX: begin
+                        // case (cycle)
+                        //     3'd0: begin
+                                if (!flags[1]) begin// ACC>=0
+                                    c[3] <= 1; // get addr from MBR to PC
+                                    // cycle <= cycle + 1;
+                                    stat <= stat + 1;
+                                end
+                                else begin
+                                    c[15] <= 1; // PC++
+                                    stat <= stat + 1;
+                                end
+                        //     end
+                        //     3'd1: begin
+                        //         c[0] <= 1; // notify RAM
+                        //         cycle <= cycle + 1;
+                        //     end
+                        // endcase
+                    end
+                    JMPX: begin
+                        c[3] <= 1; // get addr from MBR to PC
+                        stat <= stat + 1;
+                    end
+                    HALT: begin
+                        stat <= stat + 1;
+                    end
+                    MPYX: begin
                         case (cycle)
                             3'd0: begin
-                                if (zf)
+                                c[8] <= 1; // get addr from MBR to MAR 
                                 cycle <= cycle + 1;
                             end
                             3'd1: begin
                                 c[0] <= 1; // notify RAM
                                 cycle <= cycle + 1;
+                            end
+                            3'd2: begin
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
+                            end
+                            3'd3: begin
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
+                            end
+                            3'd4: begin
+                                c[7] <= 1; // send ACC to ALU
+                                c[14] <= 1; // send BR to ALU
+                                cu2alu <= MPY; // do calculation
+                                cycle <= cycle + 1;
+                            end
+                            3'd5: begin
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
+                            end
+                        endcase
+                    end
+                    ANDX: begin
+                        case (cycle)
+                            3'd0: begin
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
+                            end
+                            3'd1: begin
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
+                            end
+                            3'd2: begin
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
+                            end
+                            3'd3: begin
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
+                            end
+                            3'd4: begin
+                                c[7] <= 1; // send ACC to ALU
+                                c[14] <= 1; // send BR to ALU
+                                cu2alu <= AND; // do calculation
+                                cycle <= cycle + 1;
+                            end
+                            3'd5: begin
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
+                            end
+                        endcase
+                    end
+                    ORX: begin
+                        case (cycle)
+                            3'd0: begin
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
+                            end
+                            3'd1: begin
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
+                            end
+                            3'd2: begin
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
+                            end
+                            3'd3: begin
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
+                            end
+                            3'd4: begin
+                                c[7] <= 1; // send ACC to ALU
+                                c[14] <= 1; // send BR to ALU
+                                cu2alu <= OR; // do calculation
+                                cycle <= cycle + 1;
+                            end
+                            3'd5: begin
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
+                            end
+                        endcase
+                    end
+                    NOTX: begin
+                        case (cycle)
+                            3'd0: begin
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
+                            end
+                            3'd1: begin
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
+                            end
+                            3'd2: begin
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
+                            end
+                            3'd3: begin
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
+                            end
+                            3'd4: begin
+                                c[14] <= 1; // send BR to ALU
+                                cu2alu <= NOT; // do calculation
+                                cycle <= cycle + 1;
+                            end
+                            3'd5: begin
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
+                            end
+                        endcase
+                    end
+                    SHIFTR: begin
+                        case (cycle)
+                            3'd0: begin
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
+                            end
+                            3'd1: begin
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
+                            end
+                            3'd2: begin
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
+                            end
+                            3'd3: begin
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
+                            end
+                            3'd4: begin
+                                c[14] <= 1; // send BR to ALU
+                                cu2alu <= SRR; // do calculation
+                                cycle <= cycle + 1;
+                            end
+                            3'd5: begin
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
+                            end
+                        endcase
+                    end
+                    SHIFTL: begin
+                        case (cycle)
+                            3'd0: begin
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
+                            end
+                            3'd1: begin
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
+                            end
+                            3'd2: begin
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
+                            end
+                            3'd3: begin
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
+                            end
+                            3'd4: begin
+                                c[14] <= 1; // send BR to ALU
+                                cu2alu <= SRL; // do calculation
+                                cycle <= cycle + 1;
+                            end
+                            3'd5: begin
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
                             end
                         endcase
                     end
