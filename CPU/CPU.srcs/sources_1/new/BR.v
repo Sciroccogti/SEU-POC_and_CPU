@@ -11,9 +11,9 @@ module BR(
     always @(negedge clk or negedge rst)
     begin
         if (~rst)
-            br_out = 0;
+            br_out <= 0;
         else if (C6)
-            br_out = mbr2br;
+            br_out <= mbr2br;
     end
 
 endmodule

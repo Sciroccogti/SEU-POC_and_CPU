@@ -48,132 +48,145 @@ parameter MPY = 4'd8;
 
 always @(negedge clk or negedge rst) begin // TODO: posedge clk?
     if (~rst) begin
-        c = 0;
-        cu2alu = 0;
-        stat = 0;
-        opcode = 0;
-        cycle = 0;
+        c <= 0;
+        cu2alu <= 0;
+        stat <= 0;
+        opcode <= 0;
+        cycle <= 0;
     end
     else begin
-        c = 0;
+        c <= 0;
         case (stat)
             3'd0: begin
-                c[2] = 1; // get addr from PC to MAR
-                stat = stat + 1;
+                c[2] <= 1; // get addr from PC to MAR
+                stat <= stat + 1;
             end
             3'd1: begin
-                c[0] = 1; // notify RAM
-                c[15] = 1; // PC++
-                stat = stat + 1;
+                c[0] <= 1; // notify RAM
+                c[15] <= 1; // PC++
+                stat <= stat + 1;
             end
             3'd2: begin
-                c[5] = 1; // get data from RAM to MBR
-                stat = stat + 1;
+                c[5] <= 1; // get data from RAM to MBR
+                stat <= stat + 1;
             end
             3'd3: begin
-                c[4] = 1; // get data from MBR to IR
-                stat = stat + 1;
+                c[4] <= 1; // get data from MBR to IR
+                stat <= stat + 1;
             end
             3'd4: begin
-                if (opcode == 0)
-                    opcode = ir2cu;
+                // wait for opcode
+                stat <= stat + 1;
+            end
+            3'd5: begin
+                opcode = ir2cu;
                 case (opcode)
                     STOREX: begin
                         case (cycle)
                             3'd0: begin
-                                c[8] = 1; // get addr from MBR to MAR 
-                                cycle = cycle + 1;
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
                             end
                             3'd1: begin
-                                c[11] = 1; // get data from ACC to MBR
-                                cycle = cycle + 1;
+                                c[11] <= 1; // get data from ACC to MBR
+                                cycle <= cycle + 1;
                             end
                             3'd2: begin
-                                c[0] = 1; // notify RAM
-                                c[12] = 1; // get data from MBR to RAM
-                                // cycle = 0;
-                                // opcode = 0;
-                                stat = stat + 1;
+                                c[0] <= 1; // notify RAM
+                                c[12] <= 1; // get data from MBR to RAM
+                                // cycle <= 0;
+                                // opcode <= 0;
+                                stat <= stat + 1;
                             end
                         endcase
                     end
                     LOADX: begin
                         case (cycle)
                             3'd0: begin
-                                c[8] = 1; // get addr from MBR to MAR 
-                                cycle = cycle + 1;
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
                             end
                             3'd1: begin
-                                c[0] = 1; // notify RAM
-                                cycle = cycle + 1;
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
                             end
                             3'd2: begin
-                                c[5] = 1; // get data from ROM to MBR
-                                cycle = cycle + 1;
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
                             end
                             3'd3: begin
-                                c[10] = 1; // get data from MBR to ACC
-                                stat = stat + 1;
+                                c[10] <= 1; // get data from MBR to ACC
+                                stat <= stat + 1;
                             end
                         endcase
                     end
                     ADDX: begin
                         case (cycle)
                             3'd0: begin
-                                c[8] = 1; // get addr from MBR to MAR 
-                                cycle = cycle + 1;
+                                c[8] <= 1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
                             end
                             3'd1: begin
-                                c[0] = 1; // notify RAM
-                                cycle = cycle + 1;
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
                             end
                             3'd2: begin
-                                c[5] = 1; // get data from ROM to MBR
-                                cycle = cycle + 1;
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
                             end
                             3'd3: begin
-                                c[6] = 1; // get data from MBR to BR
-                                cycle = cycle + 1;
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
                             end
                             3'd4: begin
-                                c[7] = 1; // send ACC to ALU
-                                c[14] = 1; // send BR to ALU
+                                c[7] <= 1; // send ACC to ALU
+                                c[14] <= 1; // send BR to ALU
                                 // TODO: need another cycle between this?
-                                cu2alu = ADD; // do calculation
+                                cu2alu <= ADD; // do calculation
+                                cycle <= cycle + 1;
                             end
                             3'd5: begin
-                                c[9] = 1; // get data from ALU to ACC
-                                stat = stat + 1;
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
                             end
                         endcase
                     end
                     SUBX: begin
                         case (cycle)
                             3'd0: begin
-                                c[8] = 1; // get addr from MBR to MAR 
-                                cycle = cycle + 1;
+                                c[8] <=  1; // get addr from MBR to MAR 
+                                cycle <= cycle + 1;
                             end
                             3'd1: begin
-                                c[0] = 1; // notify RAM
-                                cycle = cycle + 1;
+                                c[0] <= 1; // notify RAM
+                                cycle <= cycle + 1;
                             end
                             3'd2: begin
-                                c[5] = 1; // get data from ROM to MBR
-                                cycle = cycle + 1;
+                                c[5] <= 1; // get data from ROM to MBR
+                                cycle <= cycle + 1;
                             end
                             3'd3: begin
-                                c[6] = 1; // get data from MBR to BR
-                                cycle = cycle + 1;
+                                c[6] <= 1; // get data from MBR to BR
+                                cycle <= cycle + 1;
                             end
                             3'd4: begin
-                                c[7] = 1; // send ACC to ALU
-                                c[14] = 1; // send BR to ALU
+                                c[7] <= 1; // send ACC to ALU
+                                c[14] <= 1; // send BR to ALU
                                 // TODO: need another cycle between this?
-                                cu2alu = SUB; // do calculation
+                                cu2alu <= SUB; // do calculation
+                                cycle <= cycle + 1;
                             end
                             3'd5: begin
-                                c[9] = 1; // get data from ALU to ACC
-                                stat = stat + 1;
+                                // wait for alu
+                                cycle <= cycle + 1;
+                            end
+                            3'd6: begin
+                                c[9] <= 1; // get data from ALU to ACC
+                                stat <= stat + 1;
                             end
                         endcase
                     end
@@ -185,10 +198,10 @@ always @(negedge clk or negedge rst) begin // TODO: posedge clk?
             default: begin
                 
             end
-            3'd5: begin
-                opcode = 0;
-                cycle = 0;
-                stat = 0;
+            3'd6: begin
+                opcode <= 0;
+                cycle <= 0;
+                stat <= 0;
             end
         endcase
     end

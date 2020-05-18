@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="test_nonflag_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="test_nonflag" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="0fs"></ZoomStartTime>
+      <ZoomEndTime time="404001fs"></ZoomEndTime>
+      <Cursor1Time time="404000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="175"></NameColumnWidth>
+      <ValueColumnWidth column_width="132"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="17" />
+   <wvobject fp_name="/test_nonflag/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/rst" type="logic">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/c" type="array">
+      <obj_property name="ElementShortName">c[15:0]</obj_property>
+      <obj_property name="ObjectShortName">c[15:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/cu/stat" type="array">
+      <obj_property name="ElementShortName">stat[2:0]</obj_property>
+      <obj_property name="ObjectShortName">stat[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/cu/opcode" type="array">
+      <obj_property name="ElementShortName">opcode[7:0]</obj_property>
+      <obj_property name="ObjectShortName">opcode[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/cu/cycle" type="array">
+      <obj_property name="ElementShortName">cycle[2:0]</obj_property>
+      <obj_property name="ObjectShortName">cycle[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/mar_out" type="array">
+      <obj_property name="ElementShortName">mar_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">mar_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/mbr_out" type="array">
+      <obj_property name="ElementShortName">mbr_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">mbr_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/ram_out" type="array">
+      <obj_property name="ElementShortName">ram_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/pc_out" type="array">
+      <obj_property name="ElementShortName">pc_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">pc_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/ir_out" type="array">
+      <obj_property name="ElementShortName">ir_out[7:0]</obj_property>
+      <obj_property name="ObjectShortName">ir_out[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/cu2alu" type="array">
+      <obj_property name="ElementShortName">cu2alu[3:0]</obj_property>
+      <obj_property name="ObjectShortName">cu2alu[3:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/acc_out" type="array">
+      <obj_property name="ElementShortName">acc_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">acc_out[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/br2alu" type="array">
+      <obj_property name="ElementShortName">br2alu[15:0]</obj_property>
+      <obj_property name="ObjectShortName">br2alu[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/alu2acc" type="array">
+      <obj_property name="ElementShortName">alu2acc[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alu2acc[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/alu2mr" type="array">
+      <obj_property name="ElementShortName">alu2mr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alu2mr[15:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/test_nonflag/top_noflag/ram_mod/ram" type="array">
+      <obj_property name="ElementShortName">ram[255:0][15:0]</obj_property>
+      <obj_property name="ObjectShortName">ram[255:0][15:0]</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+   </wvobject>
+</wave_config>

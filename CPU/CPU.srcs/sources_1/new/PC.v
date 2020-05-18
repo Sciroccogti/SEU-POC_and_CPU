@@ -12,13 +12,13 @@ module PC(
     always @(negedge clk or negedge rst)
     begin
         if (~rst)
-            pc_out = 0;
+            pc_out <= 0;
         else
         begin
             if(C3)
-                pc_out = mbr2pc;
+                pc_out <= mbr2pc;
             else if(C15)
-                pc_out = pc_out + 1;
+                pc_out <= pc_out + 1;
         end
     end
 

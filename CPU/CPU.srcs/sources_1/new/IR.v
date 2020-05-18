@@ -11,11 +11,11 @@ module IR(
     always @(negedge clk or negedge rst)
     begin
         if (~rst)
-            ir_out = 0;
+            ir_out <= 0;
         else
         begin
             if(C4)
-                ir_out = mbr2ir;
+                ir_out <= mbr2ir;
         end
     end
 

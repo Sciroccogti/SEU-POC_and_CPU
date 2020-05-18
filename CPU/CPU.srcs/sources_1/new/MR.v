@@ -11,9 +11,9 @@ module MR(
     always @(negedge clk or negedge rst)
     begin
         if (~rst)
-            mr_out = 0;
+            mr_out <= 0;
         else if (C9)
-            mr_out = alu2mr; 
+            mr_out <= alu2mr; 
     end
 
 endmodule // MR

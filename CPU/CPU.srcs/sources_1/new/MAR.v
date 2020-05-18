@@ -14,13 +14,13 @@ module MAR(
     always @(negedge clk or negedge rst)
     begin
         if (~rst)
-            mar_out = 0;
+            mar_out <= 0;
         else
         begin
             if(C8)
-                mar_out = mbr2mar;
+                mar_out <= mbr2mar;
             else if(C2)
-                mar_out = pc2mar;
+                mar_out <= pc2mar;
         end
     end
 
